@@ -29,7 +29,7 @@ npm install -D tailwindcss postcss autoprefixer
 4. Inicializar Tailwind e PostCSS
 npx tailwindcss init -p
 
-Isso cria:
+Isso cria os arquivos:
 
 tailwind.config.js
 postcss.config.js
@@ -51,12 +51,16 @@ module.exports = {
   plugins: [],
 }
 
+Rodar no terminal:
+npx tailwindcss -i ./src/css/input.css -o ./dist/output.css --minify
+npx tailwindcss -i ./src/css/input.css -o ./dist/output.css --watch
 
 6. Criar estrutura de pastas
-mkdir -p src/css dist assets
+mkdir -p src/css public assets
+
 src/css → CSS fonte do Tailwind
-dist → CSS compilado
-assets → imagens e arquivos estáticos
+public → saída final do HTML e CSS para deploy
+assets → imagens e outros arquivos estáticos
 
 
 7. Criar arquivo src/css/input.css
@@ -83,58 +87,60 @@ body {
 }
 
 
+
 8. Scripts do package.json
 "scripts": {
   "dev": "tailwindcss -i ./src/css/input.css -o ./dist/output.css --watch",
-  "build": "tailwindcss -i ./src/css/input.css -o ./dist/output.css --minify"
+  "build": "tailwindcss -i ./src/css/input.css -o ./public/output.css --minify && cp src/index.html public/index.html"
 }
+
 dev → desenvolvimento local com atualização automática do CSS
-build → gera CSS minificado pronto para produção (Vercel)
+build → gera CSS minificado e copia HTML para public/ para deploy
 
 ✅ É aqui que entra o comando npx tailwindcss -i ./src/css/input.css -o ./dist/output.css --minify.
 Ele é usado quando você quer gerar a versão final do CSS, antes do deploy.
 
 
-9. Criar arquivo HTML src/index.html
-Ajuste a referência do CSS:
-<link href="/dist/output.css" rel="stylesheet">
+9. Criar arquivo HTML public/index.html
+<link href="output.css" rel="stylesheet">
 
-⚠️ Caminho absoluto /dist/output.css evita problemas no deploy da Vercel.
-
+Referência relativa ao CSS compilado em public/.
+Não use <style> inline; todo estilo customizado vai em input.css.
 Todo estilo customizado via Tailwind deve ficar em input.css e não inline no HTML.
 
 
 10. Rodar desenvolvimento local
 npm run dev
-Ele compila e atualiza automaticamente dist/output.css
-Abra src/index.html com Live Server
+Ele compila e atualiza automaticamente public/output.css
+Abra public/index.html com Live Server
 
 
 11. Build para produção
 npm run build
-Gera CSS minificado em dist/output.css
+Gera CSS minificado em public/output.css
 Use antes de subir para o GitHub ou Vercel
 
 
 12. Deploy na Vercel
-Suba o projeto para um repositório Git.
+Suba o projeto no GitHub
 No painel da Vercel:
 Build Command: npm run build
-Output Directory: . (ou dist, se você preferir)
-Confirme que index.html está acessível e CSS no /dist/output.css
+Output Directory: public
+Confirme que index.html e output.css estão acessíveis
+
+A Vercel irá servir o site a partir de public/ com todos os estilos aplicados.
 
 
 13. Estrutura final de pastas
 curriculo/
-├── dist/
+├── public/
+│   ├── index.html      <-- HTML copiado no build
 │   └── output.css      <-- CSS compilado
-├── node_modules/
 ├── src/
-│   ├── css/
-│   │   └── input.css   <-- CSS Tailwind
-│   ├── index.html      <-- HTML principal
-│   └── assets/
-│       └── fotoperfil.jpg
+│   └── css/input.css   <-- CSS Tailwind
+├── assets/
+│   └── fotoperfil.jpg
+├── node_modules/
 ├── package.json
 ├── postcss.config.js
 ├── tailwind.config.js
@@ -178,3 +184,4 @@ npm init -y
 npm install -D tailwindcss postcss autoprefixer
 npx tailwindcss init -p
 npm run dev
+npm run build
