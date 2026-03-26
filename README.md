@@ -1,41 +1,41 @@
-📚 README: Criando um Projeto com Tailwind CSS e PostCSS do Zero
+📚 Currículo Web com Tailwind CSS e PostCSS
 🚀 Objetivo
 
-Criar um site simples de currículo usando Tailwind CSS com PostCSS, organizado, profissional e preparado para desenvolvimento contínuo com Live Server.
+Criar um site de currículo profissional, responsivo e organizado, usando Tailwind CSS com PostCSS. Preparado para desenvolvimento contínuo e deploy na Vercel.
 
 🔧 Ferramentas usadas
 Node.js + npm
 Tailwind CSS
 PostCSS + Autoprefixer
 VS Code (com extensão Live Server)
+⚙️ Passo a passo detalhado
 
-Passo a passo detalhado
+
 1. Criar pasta do projeto
-
 mkdir curriculo
 cd curriculo
 
+
 2. Inicializar npm
 npm init -y
-Isso cria um package.json básico.
+
+Isso cria o package.json básico.
+
 
 3. Instalar dependências de desenvolvimento
 npm install -D tailwindcss postcss autoprefixer
 
-4. Inicializar configuração do Tailwind e PostCSS
+
+4. Inicializar Tailwind e PostCSS
 npx tailwindcss init -p
 
-
-Isso cria dois arquivos na raiz:
+Isso cria:
 
 tailwind.config.js
 postcss.config.js
 
 
 5. Configurar tailwind.config.js
-
-Edite para incluir os caminhos dos seus arquivos que usarão Tailwind:
-
 module.exports = {
   content: ["./src/**/*.{html,js}"],
   theme: {
@@ -54,15 +54,12 @@ module.exports = {
 
 6. Criar estrutura de pastas
 mkdir -p src/css dist assets
-
-src/css — CSS fonte do Tailwind
-dist — saída do CSS compilado
-assets — imagens e outros arquivos estáticos
+src/css → CSS fonte do Tailwind
+dist → CSS compilado
+assets → imagens e arquivos estáticos
 
 
 7. Criar arquivo src/css/input.css
-
-Conteúdo:
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -72,8 +69,6 @@ Conteúdo:
 body {
   font-family: 'Inter', sans-serif;
 }
-
-/* Classes utilitárias customizadas via @apply devem ir aqui */
 
 .skill-item {
   @apply px-3 py-1.5 bg-slate-100 text-slate-700 rounded-full text-sm font-medium hover:bg-slate-200 transition-colors cursor-default;
@@ -88,38 +83,78 @@ body {
 }
 
 
-8. Adicionar script no package.json
-
-No seu package.json, adicione:
+8. Scripts do package.json
 "scripts": {
-  "dev": "tailwindcss -i ./src/css/input.css -o ./dist/output.css --watch"
+  "dev": "tailwindcss -i ./src/css/input.css -o ./dist/output.css --watch",
+  "build": "tailwindcss -i ./src/css/input.css -o ./dist/output.css --minify"
 }
+dev → desenvolvimento local com atualização automática do CSS
+build → gera CSS minificado pronto para produção (Vercel)
+
+✅ É aqui que entra o comando npx tailwindcss -i ./src/css/input.css -o ./dist/output.css --minify.
+Ele é usado quando você quer gerar a versão final do CSS, antes do deploy.
 
 
 9. Criar arquivo HTML src/index.html
+Ajuste a referência do CSS:
+<link href="/dist/output.css" rel="stylesheet">
 
-Baseie-se no seu layout atual, ajustando a referência do CSS para:
-<link href="../dist/output.css" rel="stylesheet">
+⚠️ Caminho absoluto /dist/output.css evita problemas no deploy da Vercel.
 
-Importante: Não coloque <style> com @apply no HTML! Use só classes Tailwind.
+Todo estilo customizado via Tailwind deve ficar em input.css e não inline no HTML.
 
 
-10. Rodar o Tailwind em modo desenvolvimento
+10. Rodar desenvolvimento local
 npm run dev
-
-Ele vai gerar e atualizar o dist/output.css toda vez que você salvar input.css ou index.html.
-
-
-11. Abrir com Live Server
-No VS Code, clique com o botão direito em src/index.html e escolha Open with Live Server.
-
-Isso abrirá o navegador e atualiza automaticamente sempre que salvar mudanças.
+Ele compila e atualiza automaticamente dist/output.css
+Abra src/index.html com Live Server
 
 
-12. Testar o projeto
-Altere alguma classe no HTML para testar (ex: bg-red-500)
-Salve o input.css e veja se o CSS se recompila automaticamente
-Veja no navegador o resultado
+11. Build para produção
+npm run build
+Gera CSS minificado em dist/output.css
+Use antes de subir para o GitHub ou Vercel
+
+
+12. Deploy na Vercel
+Suba o projeto para um repositório Git.
+No painel da Vercel:
+Build Command: npm run build
+Output Directory: . (ou dist, se você preferir)
+Confirme que index.html está acessível e CSS no /dist/output.css
+
+
+13. Estrutura final de pastas
+curriculo/
+├── dist/
+│   └── output.css      <-- CSS compilado
+├── node_modules/
+├── src/
+│   ├── css/
+│   │   └── input.css   <-- CSS Tailwind
+│   ├── index.html      <-- HTML principal
+│   └── assets/
+│       └── fotoperfil.jpg
+├── package.json
+├── postcss.config.js
+├── tailwind.config.js
+└── .gitignore
+
+
+14. .gitignore sugerido
+node_modules/
+.env
+.DS_Store
+
+✅ Não ignore dist/output.css, pois o CSS compilado é necessário para produção.
+
+
+15. Testando
+Alterar qualquer classe Tailwind no HTML
+Salvar input.css
+Verificar se dist/output.css atualiza automaticamente
+Testar npm run build antes do deploy
+
 
 
 🔥 Dicas para evoluir seu projeto
@@ -143,18 +178,3 @@ npm init -y
 npm install -D tailwindcss postcss autoprefixer
 npx tailwindcss init -p
 npm run dev
-
-Estrutura final de pastas (exemplo)
-curriculo/
-├── dist/
-│   └── output.css
-├── node_modules/
-├── src/
-│   ├── css/
-│   │   └── input.css
-│   ├── index.html
-│   └── assets/
-│       └── fotoperfil.jpg
-├── package.json
-├── postcss.config.js
-└── tailwind.config.js
