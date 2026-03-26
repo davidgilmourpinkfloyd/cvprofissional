@@ -1,0 +1,33 @@
+# Node modules (caso use Node/Tailwind via npm)
+node_modules/
+
+# Pastas de build ou dist
+dist/
+build/
+
+# Logs
+*.log
+
+# Sistema e editor
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*.bak
+
+# Configs locais do editor/IDE
+.vscode/
+.idea/
+
+# Arquivos temporários
+*.tmp
+*.temp
+
+# Secrets ou credenciais (caso use)
+.env
+
+# Tailwind cache (se houver)
+.tailwindcache
+
+# Arquivos de PDF gerados localmente
+*.pdf
