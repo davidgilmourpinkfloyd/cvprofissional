@@ -1,19 +1,37 @@
 {
   "name": "curriculo",
   "version": "1.0.0",
-  "description": "",
-  "main": "postcss.config.js",
+  "description": "Meu Currículo Profissional",
+  "main": "index.html",
   "scripts": {
-    "dev": "tailwindcss -i ./src/css/input.css -o ./dist/output.css --watch",
-    "build": "tailwindcss -i ./src/css/input.css -o ./public/output.css --minify && cp src/index.html public/index.html",
-    "test": "echo \"Teste ok!\" && exit 1"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "deploy": "npm run build && gh-pages -d dist"
   },
   "devDependencies": {
-    "autoprefixer": "^10.4.27",
-    "postcss": "^8.5.8",
-    "tailwindcss": "^3.4.19"
+    "autoprefixer": "^10.5.0",
+    "esbuild": "^0.28.0",
+    "postcss": "^8.5.14",
+    "tailwindcss": "^3.4.19",
+    "vite": "^8.0.11"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "keywords": [
+    "curriculo",
+    "perfil-profissional",
+    "vite",
+    "tailwindcss",
+    "html",
+    "css",
+    "javascript"
+  ],
+  "author": "David Gilmour",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dgilmourcode/curriculo.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dgilmourcode/curriculo/issues"
+  }
 }

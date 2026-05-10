@@ -1,3 +1,6 @@
+//Importação dos estilos
+import "../css/styles.css"
+
 // Inicializa os ícones Lucide
 lucide.createIcons();
 
